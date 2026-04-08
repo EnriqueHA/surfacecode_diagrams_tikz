@@ -1,0 +1,74 @@
+\documentclass[a4,12pt]{article}
+\usepackage{graphicx} 
+\usepackage{surfacecode} % Your custom package
+
+\title{Surface code diagrams}
+\author{Enrique Herrera}
+\date{}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+
+% --- PANEL 1: The Physical Code & Errors ---
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        % 1. Draw distance 5 grid
+        \scgrid[5]
+        
+        % 2. Highlight specific stabilizers
+        \scface[fill=scpink]{3}{3}{Z}
+        \scface[fill=scpink]{2}{1}{}
+        
+        % 3. Draw a Pauli Z error on the physical lattice edge
+        \scedge[very thick]{1}{2}{2}{2}{Z}
+    \end{tikzpicture}
+    \caption{Caption}
+    \label{fig:placeholder}
+\end{figure}
+
+
+\vspace{1cm}
+
+% --- PANEL 2: MWPM Complete Graph ---
+\begin{tikzpicture}
+    \scgrid[5]
+    
+    % Draw the defect nodes (Syndrome = -1)
+    % Notice how boundary index '0' cleanly handles the virtual node
+    \scmwpmnode{0}{1}
+    \scmwpmnode{0}{3}
+    \scmwpmnode{2}{1}
+    \scmwpmnode{3}{3}
+    \scmwpmnode{4}{2}
+    
+    % Draw the all-to-all matching graph
+    \scmwpmedge{0}{1}{2}{1}
+    \scmwpmedge{0}{1}{3}{3}
+    \scmwpmedge{2}{1}{4}{2}
+    \scmwpmedge{0}{3}{3}{3}
+\end{tikzpicture}
+
+\vspace{1cm}
+
+% --- PANEL 3: MWPM Decoding Result ---
+\begin{tikzpicture}
+    % Turn on virtual squares for MWPM visualization!
+    \scvirtualtrue
+    \scgrid[5]
+    
+    \scmwpmnode{0}{1}
+    \scmwpmnode{2}{1}
+    \scmwpmnode{3}{3}
+    \scmwpmnode{4}{2}
+    
+    % The matched paths
+    \scmwpmedge[very thick, black]{0}{1}{2}{1}
+    \scmwpmedge[very thick, black]{3}{3}{4}{2}
+    
+    % Reset to semicircles for future plots
+    \scvirtualfalse 
+\end{tikzpicture}
+
+\end{document}
